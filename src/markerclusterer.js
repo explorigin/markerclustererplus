@@ -488,7 +488,7 @@ Cluster.prototype.addMarker = function (marker) {
   marker.isAdded = true;
   this.markers_.push(marker);
 
-  mCount = this.markers_.length;
+  mCount = parseInt(this.markerClusterer_.getCalculator()(this.markers_, 0).text, 10);
   mz = this.markerClusterer_.getMaxZoom();
   if (mz !== null && this.map_.getZoom() > mz) {
     // Zoomed in past max zoom, so show the marker.
@@ -502,7 +502,7 @@ Cluster.prototype.addMarker = function (marker) {
     }
   } else if (mCount === this.minClusterSize_) {
     // Hide the markers that were showing.
-    for (i = 0; i < mCount; i++) {
+    for (i = 0; i < this.markers_.length; i++) {
       this.markers_[i].setMap(null);
     }
   } else {
@@ -538,7 +538,7 @@ Cluster.prototype.calculateBounds_ = function () {
  * Updates the cluster icon.
  */
 Cluster.prototype.updateIcon_ = function () {
-  var mCount = this.markers_.length;
+  var mCount = parseInt(this.markerClusterer_.getCalculator()(this.markers_, 0).text, 10);
   var mz = this.markerClusterer_.getMaxZoom();
 
   if (mz !== null && this.map_.getZoom() > mz) {
